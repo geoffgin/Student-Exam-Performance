@@ -93,3 +93,27 @@ ggplot()+geom_freqpoly(groupa,mapping=aes(mean,color='A'))+geom_freqpoly(groupb,
   geom_freqpoly(groupe,mapping=aes(mean,color='E'))
 ```
 
+```{r}
+group_A<-groupa%>%rename(mean_A=mean)%>%select(mean_A)%>%arrange(desc(`mean_A`))%>%head(89)%>%round(digits = 1)
+group_B<-groupb%>%rename(mean_B=mean)%>%select(mean_B)%>%arrange(desc(`mean_B`))%>%head(89)%>%round(digits = 1)
+group_C<-groupc%>%rename(mean_C=mean)%>%select(mean_C)%>%arrange(desc(`mean_C`))%>%head(89)%>%round(digits = 1)
+group_D<-groupd%>%rename(mean_D=mean)%>%select(mean_D)%>%arrange(desc(`mean_D`))%>%head(89)%>%round(digits = 1)
+group_E<-groupe%>%rename(mean_E=mean)%>%select(mean_E)%>%arrange(desc(`mean_E`))%>%head(89)%>%round(digits = 1)
+cbi<-cbind(group_A,group_B,group_C,group_D,group_E)
+cbi%>%head()
+summary(cbi)
+```
+
+Students who completed test prep courses have higher mean scores
+
+```{r}
+#(3)observe test preparation course and mean
+uncomplete_prep<-ndata%>%filter(`test.preparation.course`=='none')
+complete_prep<-ndata%>%filter(`test.preparation.course`=='completed')
+prep1<-ggplot()+geom_bar(uncomplete_prep,mapping = aes(x=mean,fill='uncompleted'))+
+  geom_bar(complete_prep,mapping=aes(x=mean,fill='comploeted'))
+prep2<-ggplot()+geom_boxplot(ndata,mapping=aes(`test.preparation.course`,mean))
+prep1
+prep2
+```
+
