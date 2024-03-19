@@ -58,3 +58,38 @@ geom_text(aes(label = avg_score))+coord_flip()+labs(title='Average score of each
 
 ```
 
+### Level of Education of Parents
+
+```{r}
+data%>%group_by(race.ethnicity,parental.level.of.education)%>%summarize(count=n())%>%
+ggplot()+geom_col(aes(race.ethnicity,count,fill=parental.level.of.education),position='dodge')+scale_fill_manual(values = c("#4B0082", "#800080","#9932CC","#6A5ACD","#BA55D3","#EE82EE"))
+```
+
+### Education of Parents and Mean Score
+
+```{r}
+groupa<-ndata%>%filter(`race.ethnicity`=='group A')
+groupb<-ndata%>%filter(`race.ethnicity`=='group B')
+groupc<-ndata%>%filter(`race.ethnicity`=='group C')
+groupd<-ndata%>%filter(`race.ethnicity`=='group D')
+groupe<-ndata%>%filter(`race.ethnicity`=='group E')
+ggplot(groupa)+geom_boxplot(mapping=aes(x=reorder(`parental.level.of.education`,mean,median),mean))+
+  ggtitle('GROUP A')+xlab('parental level of education')+coord_flip()
+ggplot(groupb)+geom_boxplot(mapping=aes(x=reorder(`parental.level.of.education`,mean,median),mean))+
+  ggtitle('GROUP B')+xlab('parental level of education')+coord_flip()
+ggplot(groupc)+geom_boxplot(mapping=aes(x=reorder(`parental.level.of.education`,mean,median),mean))+
+  ggtitle('GROUP C')+xlab('parental level of education')+coord_flip()
+ggplot(groupd)+geom_boxplot(mapping=aes(x=reorder(`parental.level.of.education`,mean,median),mean))+
+  ggtitle('GROUP D')+xlab('parental level of education')+coord_flip()
+ggplot(groupe)+geom_boxplot(mapping=aes(x=reorder(`parental.level.of.education`,mean,median),mean))+
+  ggtitle('GROUP E')+xlab('parental level of education')+coord_flip()
+```
+
+### Mean Score of Each Plot
+
+```{r}
+ggplot()+geom_freqpoly(groupa,mapping=aes(mean,color='A'))+geom_freqpoly(groupb,mapping=aes(mean,color='B'))+
+  geom_freqpoly(groupc,mapping=aes(mean,color='C'))+geom_freqpoly(groupd,mapping=aes(mean,color='D'))+
+  geom_freqpoly(groupe,mapping=aes(mean,color='E'))
+```
+
