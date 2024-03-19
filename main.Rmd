@@ -45,3 +45,16 @@ ggplot()+
 pairs.panels(data[6:8])
 ```
 
+The plot above shows that females have a higher reading/wriitng score and males tend to have higher math scores
+
+### Averages Scores of Each Group
+
+```{r}
+ndata%>%
+group_by(race.ethnicity)%>%
+summarize(avg_score=round(sum(mean)/n(),1))%>%
+ggplot(aes(race.ethnicity,avg_score,fill=race.ethnicity))+geom_bar(stat='identity')+
+geom_text(aes(label = avg_score))+coord_flip()+labs(title='Average score of each group')+guides(fill=F)
+
+```
+
