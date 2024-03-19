@@ -1,8 +1,7 @@
 ---
 title: "R Notebook"
-output: html_notebook
+output: pdf_document
 ---
-
 ### Import Libraries
 
 ```{r}
@@ -12,7 +11,7 @@ library(psych)
 library(dplyr)
 ```
 
-### Load our data
+### Load our Data
 
 ```{r}
 data <- read.csv("assets/StudentsPerformance.csv")
@@ -20,9 +19,9 @@ data%>%head()
 ndata<-mutate(data,mean=(`math.score`+`reading.score`+`writing.score`)/3) #mean of three score
 table(data$parental.level.of.education)
 table(data$lunch)
-
 ```
-### Comparing Reading and Writing Score Against Math Scores
+
+### Comparing the Reading and Writing Scores again Math Scores
 
 ```{r}
 girl_data<-data%>%filter(gender=='female')
@@ -33,5 +32,16 @@ ggplot()+
 ggplot()+
   geom_point(girl_data,mapping=aes(`math.score`,`writing.score`,color='female'))+
   geom_point(boy_data,mapping = aes(`math.score`,`writing.score`,color='male'))+labs(title='Math and Writing score')
+```
+Now we comparing Reading and Writing Scores
+
+```{r}
+ggplot()+
+  geom_point(girl_data,mapping=aes(`reading.score`,`writing.score`,color='female'),alpha=1/2)+
+  geom_point(boy_data,mapping = aes(`reading.score`,`writing.score`,color='male'),alpha=1/2)+labs(title='Reading and Writing')
+```
+
+```{r}
+pairs.panels(data[6:8])
 ```
 
